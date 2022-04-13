@@ -186,10 +186,13 @@ void ManchesterDecode::pasteThisToConvCpltCallback()
             tmpEdge = edge;
             return;
         }
+        if (edge != tmpEdge)
+        {
+            curEdge = edge;
+            decodeIteration();
+        }
 
-        if (edge != tmpEdge) curEdge = edge;
-
-        decodeIteration();
+        tmpEdge = edge;
         printf("%d\n", adcRes);
     }
 }
