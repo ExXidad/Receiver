@@ -46,25 +46,25 @@ void ManchesterDecode::pasteThisToTIMCallback(TIM_HandleTypeDef *htim)
             timer_counter++;
         }
 
-//        if (signalType == ANALOG)
-//        {
-//            uint16_t adcRes = adcBuffer[0];
-//            uint8_t state = adcRes < threshold ? 0 : 1;
-//            DecodeEdge edge = state ? RAISING_EDGE : FALLING_EDGE;
-//            if (tmpEdge == NONE)
-//            {
-//                tmpEdge = edge;
-//                return;
-//            }
-//            if (edge != tmpEdge)
-//            {
-//                curEdge = edge;
-//                decodeIteration();
-////                printf("%d\n", adcRes);
-//            }
-//
-//            tmpEdge = edge;
-//        }
+        if (signalType == ANALOG)
+        {
+            uint16_t adcRes = adcBuffer[0];
+            uint8_t state = adcRes < threshold ? 0 : 1;
+            DecodeEdge edge = state ? RAISING_EDGE : FALLING_EDGE;
+            if (tmpEdge == NONE)
+            {
+                tmpEdge = edge;
+                return;
+            }
+            if (edge != tmpEdge)
+            {
+                curEdge = edge;
+                decodeIteration();
+//                printf("%d\n", adcRes);
+            }
+
+            tmpEdge = edge;
+        }
     }
 }
 
@@ -75,12 +75,12 @@ void ManchesterDecode::setDigitalMode(GPIO_TypeDef *signalPort, const uint16_t &
     this->signalPin = signalPin;
 }
 
-void ManchesterDecode::setAnalogMode(ADC_HandleTypeDef *adc, const uint32_t &threshold)
+void
+ManchesterDecode::setAnalogMode(uint16_t *adcBuffer, const uint32_t &threshold)
 {
-    this->adc = adc;
-    HAL_ADC_Start_DMA(this->adc, (uint32_t *) adcBuffer, ADC_BUF_LENGTH);
     signalType = ANALOG;
     this->threshold = threshold;
+    this->adcBuffer = adcBuffer;
 }
 
 void ManchesterDecode::decodeIteration()
