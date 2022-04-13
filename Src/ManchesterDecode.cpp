@@ -1,10 +1,8 @@
 #include "ManchesterDecode.h"
 
-ManchesterDecode::ManchesterDecode(GPIO_TypeDef *signalPort, const uint16_t &signalPin, const uint32_t &timer_period_us,
-                                   const uint32_t &bit_time_us, TIM_HandleTypeDef *htim)
+ManchesterDecode::ManchesterDecode(const uint32_t &timer_period_us, const uint32_t &bit_time_us,
+                                   TIM_HandleTypeDef *htim)
 {
-    this->signalPort = signalPort;
-    this->signalPin = signalPin;
     this->timer_period_us = timer_period_us;
     this->bit_time_us = bit_time_us;
     timer_max = this->bit_time_us / this->timer_period_us;
@@ -12,10 +10,31 @@ ManchesterDecode::ManchesterDecode(GPIO_TypeDef *signalPort, const uint16_t &sig
     this->tim = htim;
 }
 
-uint8_t ManchesterDecode::getInputSignal()
+ManchesterDecode::DecodeEdge ManchesterDecode::getInputSignal()
 {
-    uint8_t state = (uint8_t) HAL_GPIO_ReadPin(signalPort, signalPin);
-    return state;
+    uint8_t state;
+
+    switch (signalType)
+    {
+        case DIGITAL:
+            state = (uint8_t) HAL_GPIO_ReadPin(signalPort, signalPin);
+            break;
+
+        case ANALOG:
+        {
+            HAL_ADC_Start(adc);
+            HAL_ADC_PollForConversion(adc, 1);
+            uint16_t adcRes = HAL_ADC_GetValue(adc);
+            state = adcRes < threshold ? 0 : 1;
+            break;
+        }
+
+        case NOTSET:
+            state = 1;
+            break;
+    }
+
+    return state ? RAISING_EDGE : FALLING_EDGE;
 }
 
 void ManchesterDecode::setDataBit(const uint8_t &bit)
@@ -30,7 +49,7 @@ void ManchesterDecode::pasteThisToEXTICallback(uint16_t GPIO_Pin)
 {
     if (GPIO_Pin == signalPin)
     {
-        curEdge = getInputSignal() ? RAISING_EDGE : FALLING_EDGE;
+        curEdge = getInputSignal();
 
         switch (decodeState)
         {
@@ -157,4 +176,18 @@ void ManchesterDecode::pasteThisToTIMCallback(TIM_HandleTypeDef *htim)
             timer_counter++;
         }
     }
+}
+
+void ManchesterDecode::setDigitalMode(GPIO_TypeDef *signalPort, const uint16_t &signalPin)
+{
+    signalType = DIGITAL;
+    this->signalPort = signalPort;
+    this->signalPin = signalPin;
+}
+
+void ManchesterDecode::setAnalogMode(ADC_HandleTypeDef *adc, const uint32_t &threshold)
+{
+    signalType = ANALOG;
+    this->adc = adc;
+    this->threshold = threshold;
 }

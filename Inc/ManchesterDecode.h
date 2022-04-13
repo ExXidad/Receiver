@@ -1,6 +1,7 @@
 #include "stm32f4xx_hal.h"
 #include <stdio.h>
 
+
 #define MANCH_BYTES_NUM 6
 #define MANCH_SYNC_BYTES_NUM 2
 #define MANCH_DATA_BYTES_NUM MANCH_BYTES_NUM - MANCH_SYNC_BYTES_NUM
@@ -24,6 +25,13 @@ private:
         FALLING_EDGE
     };
 
+    typedef enum SignalType
+    {
+        ANALOG,
+        DIGITAL,
+        NOTSET
+    };
+
 private:
     uint16_t signalPin;
     GPIO_TypeDef *signalPort;
@@ -34,23 +42,30 @@ private:
     uint8_t bitIdx;
     bool active;
     DecodeEdge curEdge, prevEdge;
-    DecodeState decodeState=NOT_SYNC;
+    DecodeState decodeState = NOT_SYNC;
     uint32_t timer_period_us, bit_time_us;
     uint32_t timer_max, timer_threshold;
     uint16_t timer_counter = 0;
     TIM_HandleTypeDef *tim;
+    SignalType signalType = NOTSET;
+    ADC_HandleTypeDef *adc;
+    uint32_t threshold;
 public:
 private:
-    uint8_t getInputSignal();
+    DecodeEdge getInputSignal();
 
     void setDataBit(const uint8_t &bit);
 
     void dataReadyCallback();
 
 public:
-    ManchesterDecode(GPIO_TypeDef *signalPort, const uint16_t &signalPin, const uint32_t &timer_period_us,
-                     const uint32_t &bit_time_us, TIM_HandleTypeDef *htim);
+    ManchesterDecode(const uint32_t &timer_period_us, const uint32_t &bit_time_us, TIM_HandleTypeDef *htim);
 
     void pasteThisToEXTICallback(uint16_t GPIO_Pin);
+
     void pasteThisToTIMCallback(TIM_HandleTypeDef *htim);
+
+    void setDigitalMode(GPIO_TypeDef *signalPort, const uint16_t &signalPin);
+
+    void setAnalogMode(ADC_HandleTypeDef *adc, const uint32_t &threshold);
 };

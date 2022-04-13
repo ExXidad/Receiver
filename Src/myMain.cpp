@@ -2,7 +2,7 @@
 
 char buf[100];
 uint16_t adcReading;
-ManchesterDecode manchesterDecode(SIG_GPIO_Port, SIG_Pin, 10, 100, &htim9);
+ManchesterDecode manchesterDecode(10, 100, &htim9);
 
 
 [[noreturn]] int myMain()
@@ -12,6 +12,7 @@ ManchesterDecode manchesterDecode(SIG_GPIO_Port, SIG_Pin, 10, 100, &htim9);
     RetargetInit(&huart3);
     HAL_ADC_Start_IT(&hadc1);
     HAL_TIM_PWM_Start(&htim9, TIM_CHANNEL_1);
+    manchesterDecode.setDigitalMode(SIG_GPIO_Port, SIG_Pin);
 
     while (1)
     {
