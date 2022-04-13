@@ -1,25 +1,23 @@
 #include "myMain.h"
 
-#define ADC_BUF_LENGTH 4096
-volatile uint16_t adcBuffer[ADC_BUF_LENGTH];
-
-volatile char buf[100];
+char buf[100];
 uint16_t adcReading;
-ManchesterDecode manchesterDecode(10, 100, &htim9);
+ManchesterDecode manchesterDecode(2, 100, &htim2);
 
 
 [[noreturn]] int myMain()
 {
+
     HAL_TIM_Base_Start_IT(&htim2);
-    HAL_TIM_Base_Start_IT(&htim9);
+
     RetargetInit(&huart3);
 
-    HAL_TIM_PWM_Start(&htim9, TIM_CHANNEL_1);
-    HAL_ADC_Start_DMA(&hadc1, (uint32_t *) adcBuffer, ADC_BUF_LENGTH);
+    manchesterDecode.setDigitalMode(SIG_GPIO_Port, SIG_Pin);
+//    manchesterDecode.setAnalogMode(&hadc1, 1500);
+
+    HAL_TIM_PWM_Start(&htim2, TIM_CHANNEL_1);
 //    HAL_ADC_Start_IT(&hadc1);
 
-    manchesterDecode.setDigitalMode(SIG_GPIO_Port, SIG_Pin);
-//    manchesterDecode.setAnalogMode(&hadc1, 2000);
 
     while (1)
     {

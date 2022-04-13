@@ -1,6 +1,7 @@
 file(REMOVE_RECURSE
+  "CMakeFiles/Z_DUMMY_TARGET.dir/Src/ManchesterDecode.cpp.obj"
   "CMakeFiles/Z_DUMMY_TARGET.dir/Src/adc.c.obj"
-  "CMakeFiles/Z_DUMMY_TARGET.dir/Src/decode_manchester.cpp.obj"
+  "CMakeFiles/Z_DUMMY_TARGET.dir/Src/dma.c.obj"
   "CMakeFiles/Z_DUMMY_TARGET.dir/Src/gpio.c.obj"
   "CMakeFiles/Z_DUMMY_TARGET.dir/Src/main.cpp.obj"
   "CMakeFiles/Z_DUMMY_TARGET.dir/Src/myMain.cpp.obj"

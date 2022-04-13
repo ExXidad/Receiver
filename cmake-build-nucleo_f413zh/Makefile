@@ -168,6 +168,33 @@ Production/fast:
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/Production.dir/build.make CMakeFiles/Production.dir/build
 .PHONY : Production/fast
 
+Src/ManchesterDecode.obj: Src/ManchesterDecode.cpp.obj
+
+.PHONY : Src/ManchesterDecode.obj
+
+# target to build an object file
+Src/ManchesterDecode.cpp.obj:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/Z_DUMMY_TARGET.dir/build.make CMakeFiles/Z_DUMMY_TARGET.dir/Src/ManchesterDecode.cpp.obj
+.PHONY : Src/ManchesterDecode.cpp.obj
+
+Src/ManchesterDecode.i: Src/ManchesterDecode.cpp.i
+
+.PHONY : Src/ManchesterDecode.i
+
+# target to preprocess a source file
+Src/ManchesterDecode.cpp.i:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/Z_DUMMY_TARGET.dir/build.make CMakeFiles/Z_DUMMY_TARGET.dir/Src/ManchesterDecode.cpp.i
+.PHONY : Src/ManchesterDecode.cpp.i
+
+Src/ManchesterDecode.s: Src/ManchesterDecode.cpp.s
+
+.PHONY : Src/ManchesterDecode.s
+
+# target to generate assembly for a file
+Src/ManchesterDecode.cpp.s:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/Z_DUMMY_TARGET.dir/build.make CMakeFiles/Z_DUMMY_TARGET.dir/Src/ManchesterDecode.cpp.s
+.PHONY : Src/ManchesterDecode.cpp.s
+
 Src/adc.obj: Src/adc.c.obj
 
 .PHONY : Src/adc.obj
@@ -195,32 +222,32 @@ Src/adc.c.s:
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/Z_DUMMY_TARGET.dir/build.make CMakeFiles/Z_DUMMY_TARGET.dir/Src/adc.c.s
 .PHONY : Src/adc.c.s
 
-Src/decode_manchester.obj: Src/decode_manchester.cpp.obj
+Src/dma.obj: Src/dma.c.obj
 
-.PHONY : Src/decode_manchester.obj
+.PHONY : Src/dma.obj
 
 # target to build an object file
-Src/decode_manchester.cpp.obj:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/Z_DUMMY_TARGET.dir/build.make CMakeFiles/Z_DUMMY_TARGET.dir/Src/decode_manchester.cpp.obj
-.PHONY : Src/decode_manchester.cpp.obj
+Src/dma.c.obj:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/Z_DUMMY_TARGET.dir/build.make CMakeFiles/Z_DUMMY_TARGET.dir/Src/dma.c.obj
+.PHONY : Src/dma.c.obj
 
-Src/decode_manchester.i: Src/decode_manchester.cpp.i
+Src/dma.i: Src/dma.c.i
 
-.PHONY : Src/decode_manchester.i
+.PHONY : Src/dma.i
 
 # target to preprocess a source file
-Src/decode_manchester.cpp.i:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/Z_DUMMY_TARGET.dir/build.make CMakeFiles/Z_DUMMY_TARGET.dir/Src/decode_manchester.cpp.i
-.PHONY : Src/decode_manchester.cpp.i
+Src/dma.c.i:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/Z_DUMMY_TARGET.dir/build.make CMakeFiles/Z_DUMMY_TARGET.dir/Src/dma.c.i
+.PHONY : Src/dma.c.i
 
-Src/decode_manchester.s: Src/decode_manchester.cpp.s
+Src/dma.s: Src/dma.c.s
 
-.PHONY : Src/decode_manchester.s
+.PHONY : Src/dma.s
 
 # target to generate assembly for a file
-Src/decode_manchester.cpp.s:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/Z_DUMMY_TARGET.dir/build.make CMakeFiles/Z_DUMMY_TARGET.dir/Src/decode_manchester.cpp.s
-.PHONY : Src/decode_manchester.cpp.s
+Src/dma.c.s:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/Z_DUMMY_TARGET.dir/build.make CMakeFiles/Z_DUMMY_TARGET.dir/Src/dma.c.s
+.PHONY : Src/dma.c.s
 
 Src/gpio.obj: Src/gpio.c.obj
 
@@ -449,12 +476,15 @@ help:
 	@echo "... Debug"
 	@echo "... Production"
 	@echo "... Z_DUMMY_TARGET"
+	@echo "... Src/ManchesterDecode.obj"
+	@echo "... Src/ManchesterDecode.i"
+	@echo "... Src/ManchesterDecode.s"
 	@echo "... Src/adc.obj"
 	@echo "... Src/adc.i"
 	@echo "... Src/adc.s"
-	@echo "... Src/decode_manchester.obj"
-	@echo "... Src/decode_manchester.i"
-	@echo "... Src/decode_manchester.s"
+	@echo "... Src/dma.obj"
+	@echo "... Src/dma.i"
+	@echo "... Src/dma.s"
 	@echo "... Src/gpio.obj"
 	@echo "... Src/gpio.i"
 	@echo "... Src/gpio.s"

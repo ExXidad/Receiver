@@ -7,6 +7,8 @@
 #define MANCH_DATA_BYTES_NUM MANCH_BYTES_NUM - MANCH_SYNC_BYTES_NUM
 #define MANCH_SYNC_FIELD 0xAA55
 
+#define ADC_BUF_LENGTH 1
+
 class ManchesterDecode
 {
 private:
@@ -48,8 +50,9 @@ private:
     uint16_t timer_counter = 0;
     TIM_HandleTypeDef *tim;
     SignalType signalType = NOTSET;
-    ADC_HandleTypeDef *adc;
+    uint16_t adcBuffer[ADC_BUF_LENGTH];
     uint32_t threshold;
+    ADC_HandleTypeDef *adc;
     DecodeEdge tmpEdge = NONE;
 
 public:
@@ -66,10 +69,6 @@ public:
     void pasteThisToEXTICallback(uint16_t GPIO_Pin);
 
     void pasteThisToTIMCallback(TIM_HandleTypeDef *htim);
-
-    void pasteThisToConvCpltCallback();
-
-    void pasteThisToMainLoop();
 
     void setDigitalMode(GPIO_TypeDef *signalPort, const uint16_t &signalPin);
 

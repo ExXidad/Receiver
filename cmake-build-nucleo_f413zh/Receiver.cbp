@@ -270,10 +270,13 @@
 				</MakeCommands>
 			</Target>
 		</Build>
+		<Unit filename="/Users/xidad/Documents/projects/satellite/Receiver/Src/ManchesterDecode.cpp">
+			<Option target="Z_DUMMY_TARGET"/>
+		</Unit>
 		<Unit filename="/Users/xidad/Documents/projects/satellite/Receiver/Src/adc.c">
 			<Option target="Z_DUMMY_TARGET"/>
 		</Unit>
-		<Unit filename="/Users/xidad/Documents/projects/satellite/Receiver/Src/decode_manchester.cpp">
+		<Unit filename="/Users/xidad/Documents/projects/satellite/Receiver/Src/dma.c">
 			<Option target="Z_DUMMY_TARGET"/>
 		</Unit>
 		<Unit filename="/Users/xidad/Documents/projects/satellite/Receiver/Src/gpio.c">
