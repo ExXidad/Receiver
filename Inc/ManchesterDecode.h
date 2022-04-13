@@ -50,13 +50,15 @@ private:
     SignalType signalType = NOTSET;
     ADC_HandleTypeDef *adc;
     uint32_t threshold;
+    DecodeEdge tmpEdge = NONE;
+
 public:
 private:
-    DecodeEdge getInputSignal();
-
     void setDataBit(const uint8_t &bit);
 
     void dataReadyCallback();
+
+    void decodeIteration();
 
 public:
     ManchesterDecode(const uint32_t &timer_period_us, const uint32_t &bit_time_us, TIM_HandleTypeDef *htim);
@@ -64,6 +66,10 @@ public:
     void pasteThisToEXTICallback(uint16_t GPIO_Pin);
 
     void pasteThisToTIMCallback(TIM_HandleTypeDef *htim);
+
+    void pasteThisToConvCpltCallback();
+
+    void pasteThisToMainLoop();
 
     void setDigitalMode(GPIO_TypeDef *signalPort, const uint16_t &signalPin);
 
