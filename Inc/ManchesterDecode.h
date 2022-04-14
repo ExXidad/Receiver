@@ -1,10 +1,11 @@
 #include "stm32f4xx_hal.h"
 #include <stdio.h>
+#include <cmath>
 
 
-#define MANCH_BYTES_NUM 6
 #define MANCH_SYNC_BYTES_NUM 2
-#define MANCH_DATA_BYTES_NUM MANCH_BYTES_NUM - MANCH_SYNC_BYTES_NUM
+#define MANCH_DATA_BYTES_NUM 8
+#define MANCH_BYTES_NUM MANCH_DATA_BYTES_NUM + MANCH_SYNC_BYTES_NUM
 #define MANCH_SYNC_FIELD 0xAA55
 
 class ManchesterDecode
@@ -52,6 +53,8 @@ private:
     ADC_HandleTypeDef *adc;
     DecodeEdge tmpEdge = NONE;
     uint16_t * adcBuffer;
+    uint32_t cumulativeMinSum, cumulativeMaxSum;
+    uint32_t minSumNumber,maxSumNumber;
 public:
 private:
     void setDataBit(const uint8_t &bit);

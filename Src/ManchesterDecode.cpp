@@ -34,6 +34,12 @@ void ManchesterDecode::dataReadyCallback()
         printf("%c", data[i]);
     }
     printf("\n");
+
+    threshold = (0.2 * (cumulativeMaxSum / maxSumNumber) + 0.8 * (cumulativeMinSum / minSumNumber));
+    cumulativeMinSum = 0;
+    cumulativeMaxSum = 0;
+    minSumNumber = 0;
+    maxSumNumber = 0;
 }
 
 void ManchesterDecode::pasteThisToTIMCallback(TIM_HandleTypeDef *htim)
@@ -64,6 +70,19 @@ void ManchesterDecode::pasteThisToTIMCallback(TIM_HandleTypeDef *htim)
             }
 
             tmpEdge = edge;
+
+            if (decodeState == BIT_SYNC || decodeState == DATA_SYNC)
+            {
+                if (state)
+                {
+                    cumulativeMaxSum += adcRes;
+                    ++maxSumNumber;
+                } else
+                {
+                    cumulativeMinSum += adcRes;
+                    ++minSumNumber;
+                }
+            }
         }
     }
 }

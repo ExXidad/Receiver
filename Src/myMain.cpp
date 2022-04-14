@@ -10,7 +10,7 @@ uint16_t adcBuffer[ADC_BUF_LENGTH];
 [[noreturn]] int myMain()
 {
     HAL_ADC_Start_DMA(&hadc1, (uint32_t *) adcBuffer, ADC_BUF_LENGTH);
-    manchesterDecode.setAnalogMode(adcBuffer, 1500);
+    manchesterDecode.setAnalogMode(adcBuffer, 744);
 
     RetargetInit(&huart3);
 
