@@ -40,6 +40,8 @@ void ManchesterDecode::dataReadyCallback()
     cumulativeMaxSum = 0;
     minSumNumber = 0;
     maxSumNumber = 0;
+
+    if (ledDefined) HAL_GPIO_TogglePin(ledPort, ledPin);
 }
 
 void ManchesterDecode::pasteThisToTIMCallback(TIM_HandleTypeDef *htim)
@@ -207,4 +209,11 @@ void ManchesterDecode::decodeIteration()
     }
 
     prevEdge = curEdge;
+}
+
+void ManchesterDecode::addSignalLED(GPIO_TypeDef *port, const uint16_t &pin)
+{
+    this->ledPort = port;
+    this->ledPin = pin;
+    ledDefined = true;
 }

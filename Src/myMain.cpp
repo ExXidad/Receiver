@@ -10,7 +10,8 @@ uint16_t adcBuffer[ADC_BUF_LENGTH];
 [[noreturn]] int myMain()
 {
     HAL_ADC_Start_DMA(&hadc1, (uint32_t *) adcBuffer, ADC_BUF_LENGTH);
-    manchesterDecode.setAnalogMode(adcBuffer, 744);
+    manchesterDecode.setAnalogMode(adcBuffer, 700);
+    manchesterDecode.addSignalLED(LDR_GPIO_Port, LDR_Pin);
 
     RetargetInit(&huart3);
 
@@ -26,7 +27,7 @@ uint16_t adcBuffer[ADC_BUF_LENGTH];
 
     while (1)
     {
-        HAL_GPIO_TogglePin(LDR_GPIO_Port, LDR_Pin);
+//        HAL_GPIO_TogglePin(LDR_GPIO_Port, LDR_Pin);
         // printf("\r\nYour name: ");
         // scanf("%s", buf);
         // printf("\r\nHello, %s!\r\n", buf);

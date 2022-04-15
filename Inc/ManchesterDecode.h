@@ -52,9 +52,12 @@ private:
     uint32_t threshold;
     ADC_HandleTypeDef *adc;
     DecodeEdge tmpEdge = NONE;
-    uint16_t * adcBuffer;
+    uint16_t *adcBuffer;
     uint32_t cumulativeMinSum, cumulativeMaxSum;
-    uint32_t minSumNumber,maxSumNumber;
+    uint32_t minSumNumber, maxSumNumber;
+    GPIO_TypeDef *ledPort;
+    uint16_t ledPin;
+    bool ledDefined = false;
 public:
 private:
     void setDataBit(const uint8_t &bit);
@@ -73,4 +76,6 @@ public:
     void setDigitalMode(GPIO_TypeDef *signalPort, const uint16_t &signalPin);
 
     void setAnalogMode(uint16_t *adcBuffer, const uint32_t &threshold);
+
+    void addSignalLED(GPIO_TypeDef *port, const uint16_t &pin);
 };
